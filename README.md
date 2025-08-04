@@ -1,7 +1,5 @@
 # biological_feature_reduction_pipeline
-A biological feature reduction pipeline that maintains interpretability by preserving correlated features and providing flexible abundance-based filtering. Designed for ML applications where feature traceability and scientific explainability are required.
 
-Description:
 A feature reduction pipeline designed specifically for biological datasets where interpretability and feature traceability are critical. Unlike standard dimensionality reduction techniques that transform or eliminate features, this pipeline maintains interpretability by:
 
 Preserving correlated features: Retains all features while tracking correlation relationships, enabling researchers to understand which features contribute collectively to model predictions

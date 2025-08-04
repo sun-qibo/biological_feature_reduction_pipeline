@@ -30,3 +30,16 @@ A feature reduction pipeline designed specifically for biological datasets where
 
 ```bash
 pip install git+https://github.com/sun-qibo/biological_feature_reduction_pipeline.git
+
+from biological_feature_reduction_pipeline import feature_reduction_pipeline
+
+# Basic usage
+reduced_data = feature_reduction_pipeline(
+    df_data, 
+    variance_threshold=0.01,
+    correlation_threshold=0.8,
+    filter_core_genes=0.95,
+    filter_cloud_genes=0.05
+)
+
+Perfect for researchers who need to reduce feature dimensionality while maintaining biological interpretability and understanding which original features contribute to model predictions.

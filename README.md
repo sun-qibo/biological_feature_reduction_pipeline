@@ -35,8 +35,7 @@ pip install git+https://github.com/sun-qibo/biological_feature_reduction_pipelin
 ## Quick Start
 
 ```python
-
-from biological_feature_reduction_pipeline import BiologicalFeatureReducer
+from biological_feature_reducer import BiologicalFeatureReducer
 
 # New class-based interface
 reducer = BiologicalFeatureReducer(
@@ -61,7 +60,7 @@ reducer.save_results(df_reduced, "reduced_features.csv")
 ```python
 
 # Deprecated version for backward compatibility 
-from biological_feature_reduction_pipeline import feature_reduction_pipeline
+from biological_feature_reducer import feature_reduction_pipeline
 reduced_data = feature_reduction_pipeline(
     df_data, 
     variance_threshold=0.01,

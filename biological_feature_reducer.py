@@ -33,23 +33,23 @@ class BiologicalFeatureReducer:
         Threshold below which features are considered low variance
     correlation_threshold : float, default=0.8
         Threshold above which features are considered highly correlated
-    core_gene_threshold : float, optional
-        Threshold above which features are considered core genes (highly prevalent)
-    cloud_gene_threshold : float, optional
-        Threshold below which features are considered cloud genes (rare)
+    presence_high_threshold : float, optional
+        Threshold above which features are considered omnipresent (core genes)
+    presence_low_threshold : float, optional
+        Threshold below which features are considered too rare (cloud genes, rare taxa)
     """
     
     def __init__(
         self, 
         variance_threshold: float = 0.01,
         correlation_threshold: float = 0.8,
-        core_gene_threshold: Optional[float] = None,
-        cloud_gene_threshold: Optional[float] = None
+        presence_high_threshold: Optional[float] = None,
+        presence_low_threshold: Optional[float] = None
     ):
         self.variance_threshold = variance_threshold
         self.correlation_threshold = correlation_threshold
-        self.core_gene_threshold = core_gene_threshold
-        self.cloud_gene_threshold = cloud_gene_threshold
+        self.presence_high_threshold = presence_high_threshold
+        self.presence_low_threshold = presence_low_threshold
         
         # Initialize tracking attributes
         self.report = ReductionReport()
@@ -343,11 +343,11 @@ class BiologicalFeatureReducer:
         
         # Step 1: Abundance filtering (core/cloud genes)
         if 'abundance_filter' in steps_to_perform:
-            if self.core_gene_threshold is not None or self.cloud_gene_threshold is not None:
+            if self.presence_high_threshold is not None or self.presence_low_threshold is not None:
                 df_processed = self.remove_abundance_features(
                     df_processed, 
-                    min_threshold=self.cloud_gene_threshold,
-                    max_threshold=self.core_gene_threshold
+                    min_threshold=self.presence_low_threshold,
+                    max_threshold=self.presence_high_threshold
                 )
         
         # Step 2: Zero variance features
@@ -414,8 +414,8 @@ def feature_reduction_pipeline(
     reducer = BiologicalFeatureReducer(
         variance_threshold=variance_threshold,
         correlation_threshold=correlation_threshold,
-        core_gene_threshold=filter_core_genes,
-        cloud_gene_threshold=filter_cloud_genes
+        presence_high_threshold=filter_core_genes,
+        presence_low_threshold=filter_cloud_genes
     )
     
     df_reduced = reducer.fit_transform(

@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class ReductionReport:
     """Container for tracking feature reduction steps and results."""
+    # TODO: track also the parameters
     original_shape: Tuple[int, int] = (0, 0)
     final_shape: Tuple[int, int] = (0, 0)
     steps_performed: List[str] = field(default_factory=list)
@@ -50,7 +51,7 @@ class BiologicalFeatureReducer:
         self.correlation_threshold = correlation_threshold
         self.presence_high_threshold = presence_high_threshold
         self.presence_low_threshold = presence_low_threshold
-        
+        # TODO: add low abundance filter for rarefication
         # Initialize tracking attributes
         self.report = ReductionReport()
         self.correlation_graph: Optional[nx.Graph] = None

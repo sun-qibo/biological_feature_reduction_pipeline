@@ -1,4 +1,4 @@
-# biological_feature_reduction_pipeline
+# Biological Feature Reduction Pipeline
 
 A feature reduction pipeline designed specifically for biological datasets where interpretability and feature traceability are critical. Unlike standard dimensionality reduction techniques that transform or eliminate features, this pipeline maintains interpretability through intelligent feature grouping and configurable filtering.
 

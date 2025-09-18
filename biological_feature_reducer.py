@@ -32,7 +32,7 @@ class BiologicalFeatureReducer:
     ----------
     variance_threshold : float, default=0.01
         Threshold below which features are considered low variance
-    correlation_threshold : float, default=0.8
+    correlation_threshold : float, default=None
         Threshold above which features are considered highly correlated
     presence_high_threshold : float, optional
         Threshold above which features are considered omnipresent (core genes)
@@ -43,7 +43,7 @@ class BiologicalFeatureReducer:
     def __init__(
         self, 
         variance_threshold: float = 0.01,
-        correlation_threshold: float = 0.8,
+        correlation_threshold: Optional[float] = None,
         presence_high_threshold: Optional[float] = None,
         presence_low_threshold: Optional[float] = None
     ):
@@ -200,7 +200,7 @@ class BiologicalFeatureReducer:
         
         # Add edges for correlations above threshold
         rows, cols = np.where(
-            (np.abs(corr_matrix.values) >= self.correlation_threshold) & 
+            (corr_matrix.values >= self.correlation_threshold) & 
             (np.triu(np.ones_like(corr_matrix.values, dtype=bool), k=1))
         )
         
@@ -340,7 +340,10 @@ class BiologicalFeatureReducer:
         
         # Define default steps
         if steps_to_perform is None:
-            steps_to_perform = ['abundance_filter', 'zero_variance', 'low_variance', 'identical', 'correlated']
+            steps_to_perform = ['abundance_filter', 'zero_variance', 'low_variance', 'identical']
+
+        if self.correlation_threshold is not None:
+            steps_to_perform.append('correlated')
         
         # Step 1: Abundance filtering (core/cloud genes)
         if 'abundance_filter' in steps_to_perform:

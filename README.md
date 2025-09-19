@@ -73,37 +73,4 @@ print(f"Correlation clusters: {params.correlation_feature_clusters}")
 
 
 
-```python
-# previous version , can only fit and transform at a time
-from biological_feature_reducer import BiologicalFeatureReducer
-
-# New class-based interface
-reducer = BiologicalFeatureReducer(
-    variance_threshold=0.01,
-    correlation_threshold=0.8,
-    core_gene_threshold=0.95,
-    cloud_gene_threshold=0.05
-)
-
-# Perform reduction
-df_reduced = reducer.fit_transform(df_data, visualize_clusters=True)
-
-
-
-# Save results
-reducer.save_results(df_reduced, "reduced_features.csv")
-```
-
-```python
-
-# Deprecated version for backward compatibility 
-from biological_feature_reducer import feature_reduction_pipeline
-reduced_data = feature_reduction_pipeline(
-    df_data, 
-    variance_threshold=0.01,
-    correlation_threshold=0.8,
-    filter_core_genes=0.95,
-    filter_cloud_genes=0.05
-)
-```
 Perfect for researchers who need to reduce feature dimensionality while maintaining biological interpretability and understanding which original features contribute to model predictions.

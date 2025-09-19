@@ -10,13 +10,13 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="biological-feature-reduction-pipeline",
-    version="0.1.0",
-    author="Your Name",  # Replace with your name
-    author_email="your.email@example.com",  # Replace with your email
+    version="0.1.1",
+    author="Qibo Sun",  # Replace with your name
+    author_email="qibo.sun@danone.com",  # Replace with your email
     description="A feature reduction pipeline for biological datasets with interpretability preservation",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/biological_feature_reduction_pipeline",  # Replace with your repo URL
+    url="https://github.com/yourusername/biological_feature_reduction_pipeline", 
     project_urls={
         "Bug Tracker": "https://github.com/yourusername/biological_feature_reduction_pipeline/issues",
         "Documentation": "https://github.com/yourusername/biological_feature_reduction_pipeline#readme",

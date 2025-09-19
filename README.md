@@ -34,7 +34,44 @@ pip install git+https://github.com/sun-qibo/biological_feature_reduction_pipelin
 
 ## Quick Start
 
+
 ```python
+# Example 1: Basic fit/transform workflow
+reducer = BiologicalFeatureReducer(
+    variance_threshold=0.01,
+    correlation_threshold=0.8,
+    presence_low_threshold=0.1,
+    presence_high_threshold=0.9
+)
+
+# Fit on training data
+reducer.fit(train_data)
+
+# Transform test data using learned parameters
+test_reduced = reducer.transform(test_data)
+
+# Save the fitted model
+reducer.save_model('my_reducer.pkl')
+
+# Later: load and use the saved model
+loaded_reducer = BiologicalFeatureReducer.load_model('my_reducer.pkl')
+new_data_reduced = loaded_reducer.transform(new_data)
+
+# Example 2: Get feature mappings
+feature_mapping = reducer.get_feature_mapping()
+print(f"Original feature 'gene1' maps to: {feature_mapping.get('gene1', 'removed')}")
+
+# Example 3: Access fitted parameters
+params = reducer.get_fitted_parameters()
+print(f"Features removed due to low variance: {params.low_variance_features}")
+print(f"Correlation clusters: {params.correlation_feature_clusters}")
+
+```
+
+
+
+```python
+# previous version , can only fit and transform at a time
 from biological_feature_reducer import BiologicalFeatureReducer
 
 # New class-based interface

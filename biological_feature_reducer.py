@@ -617,6 +617,48 @@ class BiologicalFeatureReducer:
         """Get detailed report of the reduction process."""
         return self.report
     
+    def save_report(self, filepath: str) -> None:
+        """
+        Save the reduction report to file.
+        
+        Parameters
+        ----------
+        filepath : str
+            Path where to save the report
+        """
+        from dataclasses import asdict
+
+        with open(filepath, 'w') as f:
+            f.write(f"Feature Reduction Report\n")
+            f.write(f"{'='*50}\n\n")
+            f.write(f"Original shape: {self.report.original_shape}\n")
+            f.write(f"Final shape: {self.report.final_shape}\n")
+            f.write(f"Reduction ratio: {self.report.final_shape[1]/self.report.original_shape[1]:.2%}\n\n")
+            
+            f.write(f"Steps performed:\n")
+            for step in self.report.steps_performed:
+                f.write(f"  - {step}\n")
+            f.write(f"\n")
+            
+            f.write(f"Features removed by step:\n")
+            for step, features in self.report.features_removed.items():
+                f.write(f"  {step}: {len(features)} features\n")
+                if features:  # Only show first few if many
+                    shown_features = features[:5]
+                    f.write(f"    Examples: {', '.join(shown_features)}")
+                    if len(features) > 5:
+                        f.write(f" ... and {len(features)-5} more")
+                    f.write(f"\n")
+            f.write(f"\n")
+            
+            if self.report.feature_clusters:
+                f.write(f"Feature clusters created:\n")
+                for cluster_name, features in self.report.feature_clusters.items():
+                    f.write(f"  {cluster_name}: {len(features)} features combined\n")
+                    f.write(f"    Features: {', '.join(features)}\n")
+        
+        logger.info(f"Report saved as text to: {filepath}")
+             
     def save_results(self, df_data: pd.DataFrame, filepath: str, sep: str = '\t') -> None:
         """Save reduced data to file."""
         df_data.to_csv(filepath, sep=sep, header=True, index=True)

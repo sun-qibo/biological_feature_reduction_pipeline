@@ -44,14 +44,17 @@ reducer = BiologicalFeatureReducer(
     presence_high_threshold=0.9
 )
 
-# Fit on training data
-reducer.fit(train_data)
-
-# Transform test data using learned parameters
-test_reduced = reducer.transform(test_data)
+# Fit and transform data
+data_reduced = reducer.fit_transform(data)
 
 # Save the fitted model
 reducer.save_model('my_reducer.pkl')
+
+# Get detailed report
+report = reducer.get_reduction_report()
+print(f"Original features: {report.original_shape[1]}")
+print(f"Final features: {report.final_shape[1]}")
+reducer.save_report('reduction_report.txt')   
 
 # Later: load and use the saved model
 loaded_reducer = BiologicalFeatureReducer.load_model('my_reducer.pkl')
@@ -85,10 +88,7 @@ reducer = BiologicalFeatureReducer(
 # Perform reduction
 df_reduced = reducer.fit_transform(df_data, visualize_clusters=True)
 
-# Get detailed report
-report = reducer.get_reduction_report()
-print(f"Original features: {report.original_shape[1]}")
-print(f"Final features: {report.final_shape[1]}")
+
 
 # Save results
 reducer.save_results(df_reduced, "reduced_features.csv")

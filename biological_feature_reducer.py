@@ -126,12 +126,12 @@ class BiologicalFeatureReducer:
         to_remove = set()
         
         if self.presence_high_threshold is not None:
-            core_genes = set(df_data.columns[df_data.sum() / df_data.shape[0] > self.presence_high_threshold])
+            core_genes = set(df_data.columns[(df_data>0).sum() / df_data.shape[0] > self.presence_high_threshold])
             to_remove.update(core_genes)
             logger.info(f"Found {len(core_genes)} core genes (> {self.presence_high_threshold} presence)")
             
         if self.presence_low_threshold is not None:
-            cloud_genes = set(df_data.columns[df_data.sum() / df_data.shape[0] < self.presence_low_threshold])
+            cloud_genes = set(df_data.columns[(df_data>0).sum() / df_data.shape[0] < self.presence_low_threshold])
             to_remove.update(cloud_genes)
             logger.info(f"Found {len(cloud_genes)} cloud genes (< {self.presence_low_threshold} presence)")
             
